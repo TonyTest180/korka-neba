@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Корка неба — кафе-пекарня</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --milk:#FCF9F3; --linen:#F4EDE1; --ink:#25303F; --soft:#6C6A66;
+  --crust:#B5703A; --butter:#F0CF86; --sky:#C3D6E2; --dusk:#26364D;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Onest',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{color-scheme:light}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;height:100%}
+body{font-family:var(--sans);background:var(--milk);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  padding-top:env(safe-area-inset-top,0px)}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+:focus-visible{outline:2px solid var(--crust);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.05;letter-spacing:-.01em}
+
+/* ---------- Header ---------- */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 0;padding-top:calc(18px + env(safe-area-inset-top,0px));
+  transition:background .4s,padding .4s,box-shadow .4s}
+.hdr.stuck{background:rgba(252,249,243,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px;box-shadow:0 1px 0 rgba(37,48,63,.08)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;overflow:visible}
+.logo .ring{stroke-dasharray:290;stroke-dashoffset:290;animation:draw 1.6s .2s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.logo .sun,.logo .rays{transform-box:fill-box;transform-origin:center;transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
+.logo .rays{opacity:.9;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand:hover .sun,.brand:hover .rays{transform:translateY(-6px)}
+.logo .loaf{transform-box:fill-box;transform-origin:bottom;transition:transform .5s var(--ease)}
+.brand:hover .loaf{transform:scale(1.04,1.02)}
+.word{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.01em;line-height:1}
+.word small{display:block;font-family:var(--sans);font-size:10.5px;font-weight:500;color:var(--soft);letter-spacing:.14em;text-transform:none;margin-top:5px}
+nav{display:flex;gap:30px;font-size:14.5px;font-weight:500}
+nav a{position:relative;padding:4px 0}
+nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--crust);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft);white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:#6FA06B;position:relative}
+.dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid #6FA06B;animation:pulse 2s infinite}
+.closed .dot{background:#C99A5B}.closed .dot::after{border-color:#C99A5B}
+@keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:999px;background:var(--ink);color:var(--milk);
+  font-weight:500;font-size:14.5px;position:relative;overflow:hidden;isolation:isolate;transition:transform .4s var(--ease),box-shadow .4s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--crust);transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(37,48,63,.22)}
+.btn:hover::before{transform:none}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px rgba(37,48,63,.28)}
+.btn.ghost:hover{color:var(--milk);box-shadow:inset 0 0 0 1.5px var(--crust)}
+
+/* ---------- Hero ---------- */
+.hero{padding:150px 0 90px;position:relative;background:
+  radial-gradient(900px 500px at 85% 20%,rgba(240,207,134,.38),transparent 70%),
+  radial-gradient(700px 500px at 0% 100%,rgba(195,214,226,.45),transparent 70%),var(--milk)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.kicker{font-size:14px;color:var(--soft);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:36px;height:1.5px;background:var(--crust)}
+h1{font-size:clamp(50px,7.4vw,98px)}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.08em}
+h1 .ln span{display:block;transform:translateY(110%);animation:up 1.1s var(--ease) forwards}
+h1 .ln:nth-child(2) span{animation-delay:.12s}h1 .ln:nth-child(3) span{animation-delay:.24s}
+h1 em{font-style:italic;color:var(--crust)}
+@keyframes up{to{transform:none}}
+.lead{font-size:18px;color:var(--soft);max-width:44ch;margin:28px 0 38px;opacity:0;animation:fade 1s .7s var(--ease) forwards}
+.cta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fade 1s .9s var(--ease) forwards}
+@keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* hero orb */
+.orb{position:relative;width:100%;max-width:540px;margin-left:auto;aspect-ratio:1;opacity:0;transform:scale(.8) rotate(-8deg);animation:orbin 1.6s .15s var(--ease) forwards}
+@keyframes orbin{to{opacity:1;transform:none}}
+.ringtxt{position:absolute;inset:0;width:100%;height:100%;animation:spin 70s linear infinite}
+.ringtxt text{font-family:var(--serif);font-size:19px;font-style:italic;fill:var(--ink)}
+.disc{position:absolute;inset:12%;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#F8E2AE,#F3B987 65%,#EDA37A);
+  box-shadow:0 40px 80px -30px rgba(37,48,63,.4),0 0 0 8px var(--milk),0 0 0 9.5px rgba(181,112,58,.45)}
+.disc>*{position:absolute}
+.night{inset:0;background:linear-gradient(#1E2B45,#4D4A68 70%,#B2705A);opacity:.45;animation:nt 40s linear infinite}
+@keyframes nt{0%{opacity:.45}12%,40%{opacity:0}50%,92%{opacity:.85}100%{opacity:.45}}
+.disc .stars{opacity:0;transition:none;animation:stn 40s linear infinite}
+@keyframes stn{0%{opacity:.3}12%,40%{opacity:0}50%,92%{opacity:1}100%{opacity:.3}}
+.orbit{inset:0;animation:orb 40s linear infinite}
+@keyframes orb{from{transform:rotate(-80deg)}to{transform:rotate(280deg)}}
+.sunb2{position:absolute;left:39%;top:5%;width:22%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#FFF4D2,#FBD98A 55%,#F6C26B);box-shadow:0 0 70px 30px rgba(255,226,150,.65)}
+.hills{left:-5%;right:-5%;bottom:0;height:44%;width:110%;transition:transform .5s var(--ease);transform:translate(calc(var(--mx,0)*-7px),calc(var(--my,0)*-4px))}
+.loafw{left:14%;width:72%;bottom:9%;transition:transform .5s var(--ease);transform:translate(calc(var(--mx,0)*-16px),calc(var(--my,0)*-9px))}
+.mote{width:5px;height:5px;border-radius:50%;background:#FFF1CF;bottom:34%;opacity:0;animation:mote 6s linear infinite}
+@keyframes mote{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-150px) translateX(16px);opacity:0}}
+.steam{position:absolute;width:3px;height:70px;border-radius:3px;background:linear-gradient(to top,rgba(255,255,255,.7),transparent);animation:steam 3.6s ease-in-out infinite;opacity:0}
+@keyframes steam{0%{transform:translateY(20px) scaleY(.5);opacity:0}30%{opacity:.85}100%{transform:translateY(-40px) scaleY(1.1) skewX(8deg);opacity:0}}
+
+/* sun arc band */
+.arcband{background:var(--ink);color:var(--milk);padding:90px 0;position:relative;overflow:hidden}
+.arcband::before{content:"";position:absolute;left:55%;top:-40%;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(240,207,134,.16),transparent 66%);animation:breath 8s ease-in-out infinite}
+.arcband .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:center;position:relative}
+.arcband h2{font-size:clamp(32px,4vw,52px)}
+.arcband p{margin-top:16px;color:#B9C3CF;font-size:16px}
+.arcband svg{width:100%;overflow:visible}
+.arcband .lbl{font-family:var(--sans);font-size:14px;fill:#B9C3CF}
+@keyframes breath{50%{transform:scale(1.18)}}
+
+/* ---------- Day scene ---------- */
+.day{padding:120px 0;background:var(--linen)}
+.day .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:center}
+.day h2{font-size:clamp(34px,4.4vw,56px);margin-bottom:22px}
+.day p.t{font-size:18px;color:var(--soft);max-width:42ch;min-height:5.2em}
+.swap{transition:opacity .35s,transform .5s var(--ease)}
+.swap.out{opacity:0;transform:translateY(14px)}
+.tabs{display:inline-flex;gap:4px;padding:5px;border-radius:999px;background:rgba(37,48,63,.07);margin-bottom:34px;position:relative}
+.tabs button{font:inherit;font-size:14.5px;font-weight:500;border:0;background:none;color:var(--ink);padding:10px 22px;border-radius:999px;cursor:pointer;position:relative;z-index:1;transition:color .4s}
+.tabs button[aria-selected=true]{color:var(--milk)}
+.pill{position:absolute;top:5px;bottom:5px;left:5px;border-radius:999px;background:var(--ink);transition:transform .55s var(--ease),width .55s var(--ease)}
+.win{position:relative;aspect-ratio:1/1.02;border-radius:260px 260px 26px 26px;overflow:hidden;box-shadow:0 40px 70px -34px rgba(37,48,63,.4),0 0 0 9px var(--linen),0 0 0 10.5px rgba(37,48,63,.18)}
+.sky{position:absolute;inset:0;opacity:0;transition:opacity 1.3s ease}
+.win[data-s="0"] .s0,.win[data-s="1"] .s1,.win[data-s="2"] .s2{opacity:1}
+.s0{background:linear-gradient(#F8E2AE,#F2B27F)}
+.s1{background:linear-gradient(#9FC6DC,#E8F1F2 75%)}
+.s2{background:linear-gradient(#26364D,#8A6070 60%,#EE9A62)}
+.sun{position:absolute;width:20%;aspect-ratio:1;border-radius:50%;left:0;top:0;transition:transform 1.5s var(--ease),background 1.2s,box-shadow 1.2s}
+.win[data-s="0"] .sun{transform:translate(170%,330%);background:#FDE29B;box-shadow:0 0 80px 30px rgba(255,226,150,.7)}
+.win[data-s="1"] .sun{transform:translate(200%,110%);background:#FFF8E0;box-shadow:0 0 70px 26px rgba(255,255,255,.8)}
+.win[data-s="2"] .sun{transform:translate(310%,360%);background:#F7A857;box-shadow:0 0 90px 34px rgba(247,168,87,.65)}
+.stars{position:absolute;inset:0;opacity:0;transition:opacity 1.4s}
+.win[data-s="2"] .stars{opacity:1}
+.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#FFF1CF;animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.2;transform:scale(.6)}}
+.frame{position:absolute;inset:0;pointer-events:none}
+.frame::before,.frame::after{content:"";position:absolute;background:rgba(252,249,243,.92)}
+.frame::before{left:50%;top:0;bottom:22%;width:6px;margin-left:-3px}
+.frame::after{left:0;right:0;top:48%;height:6px}
+.sill{position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(#E9D8BE,#D8C09C)}
+.cup{position:absolute;bottom:18%;width:15%;height:12%;background:var(--milk);border-radius:4px 4px 22px 22px;box-shadow:inset 0 -6px 0 rgba(37,48,63,.06)}
+.cup::after{content:"";position:absolute;right:-34%;top:18%;width:38%;height:48%;border:4px solid var(--milk);border-left:0;border-radius:0 20px 20px 0}
+.cup .st{position:absolute;left:30%;bottom:100%;width:3px;height:36px;background:linear-gradient(to top,rgba(255,255,255,.8),transparent);animation:steam 3s infinite}
+.win .bun{position:absolute;left:11%;bottom:20%;width:30%}
+
+/* ---------- Values ---------- */
+.vals{padding:120px 0}
+.vals h2{font-size:clamp(34px,4.4vw,56px);max-width:16ch;margin-bottom:60px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.card{padding:38px 32px 36px;border-radius:22px;background:var(--linen);position:relative;overflow:hidden;transition:transform .6s var(--ease),box-shadow .6s var(--ease),background .5s}
+.card:nth-child(2){background:#E6EEF2}.card:nth-child(3){background:#F7ECCB}
+.card:hover{transform:translateY(-8px);box-shadow:0 30px 50px -28px rgba(37,48,63,.35)}
+.card svg{width:54px;height:54px;margin-bottom:26px;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
+.card:hover svg{transform:rotate(-8deg) scale(1.12)}
+.card h3{font-size:30px;margin-bottom:10px}
+.card p{color:var(--soft);font-size:15.5px}
+
+/* ---------- Visit ---------- */
+.visit{padding:0 0 120px}
+.visit .box{border-radius:34px;background:var(--dusk);color:var(--milk);padding:72px 64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.visit .box::before{content:"";position:absolute;right:-80px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(240,207,134,.5),transparent 68%);animation:breath 7s ease-in-out infinite}
+@keyframes breath{50%{transform:scale(1.18)}}
+.visit h2{font-size:clamp(34px,4.6vw,58px);position:relative}
+.visit p{color:#C6D2DD;margin-top:14px;max-width:40ch;position:relative}
+.visit .side{position:relative;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.visit .btn{background:var(--butter);color:var(--ink)}
+.visit .btn::before{background:var(--milk)}
+
+/* ---------- Footer ---------- */
+footer{background:var(--ink);color:#DDD8CC;padding:90px 0 0;position:relative;overflow:hidden}
+footer::before{content:"";position:absolute;left:0;right:0;top:-1px;height:40px;background:var(--milk);border-radius:0 0 50% 50%/0 0 100% 100%}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:44px;padding-top:16px}
+footer .word{color:var(--milk)}footer .word small{color:#9BA3AE}
+footer .ring{stroke:var(--milk)}
+footer p.about{margin-top:20px;font-size:15px;color:#A9AFB8;max-width:30ch}
+footer h3{font-family:var(--sans);font-size:13px;font-weight:600;color:#9BA3AE;margin-bottom:14px;letter-spacing:.04em}
+footer p,footer li{font-size:15px;list-style:none}
+footer li{margin-bottom:6px}
+.fl{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s var(--ease),color .3s}
+.fl:hover{background-size:100% 1px;color:var(--butter)}
+.phone{font-family:var(--serif);font-size:30px;color:var(--butter);display:inline-block;margin:8px 0 0}
+.note{font-size:13.5px;color:#9BA3AE;max-width:28ch}
+.big{font-family:var(--serif);font-size:clamp(70px,17vw,230px);line-height:.85;text-align:center;color:rgba(252,249,243,.07);margin-top:50px;white-space:nowrap;user-select:none;transition:color .8s}
+footer:hover .big{color:rgba(240,207,134,.14)}
+.bot{border-top:1px solid rgba(255,255,255,.1);padding:22px 0 calc(22px + env(safe-area-inset-bottom,0px));font-size:13px;color:#8C929C}
+.bot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;grid-template-columns:none;padding-top:0}
+.up{display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:none;border:0;color:inherit;font:inherit}
+.up:hover{color:var(--butter)}
+
+/* ---------- Reveal ---------- */
+.rv{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  nav{display:none}.status{display:none}
+  .hero{padding-top:118px}.hero .wrap,.day .wrap,.visit .box{grid-template-columns:1fr}
+  .hero .wrap{gap:50px}.orb{margin:0 auto;max-width:440px}.arcband .wrap{grid-template-columns:1fr}.arcband{padding:64px 0}
+  .grid{grid-template-columns:1fr}.visit .box{padding:48px 30px}
+  footer .wrap{grid-template-columns:1fr 1fr}.day,.vals{padding:80px 0}.visit{padding-bottom:80px}
+}
+@media (max-width:520px){.wrap{padding:0 22px}.hdr .btn{padding:11px 18px}.word small{display:none}footer .wrap{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .rv,h1 .ln span,.lead,.cta,.orb{opacity:1;transform:none}.logo .ring{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Шапка ===== -->
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Корка неба — на главную">
+      <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="ring" cx="50" cy="50" r="46" fill="none" stroke="#25303F" stroke-width="2"/>
+        <g class="rays" stroke="#E0A93E" stroke-width="2" stroke-linecap="round">
+          <path d="M50 9v4M50 31v4M29 22l3 3M71 22l-3 3M24 20h0"/>
+        </g>
+        <circle class="sun" cx="50" cy="22" r="6.5" fill="#F0B94B"/>
+        <path class="loaf" d="M22 72C22 48 36 34 50 34s28 14 28 38z" fill="#B5703A"/>
+        <g stroke="#FCF9F3" stroke-width="3.2" stroke-linecap="round" fill="none">
+          <path d="M37 62c3-8 6-12 9-15M48 62c3-8 6-12 9-15M59 62c3-8 6-12 9-15" opacity=".9"/>
+        </g>
+        <path d="M18 72h64" stroke="#25303F" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="word">корка неба<small>кафе-пекарня</small></span>
+    </a>
+    <nav aria-label="Основное меню">
+      <a href="#top">Главная</a><a href="#day">Атмосфера</a><a href="#values">Пекарня</a><a href="#visit">Визит</a>
+    </nav>
+    <div class="hdr-right">
+      <div class="status" id="status"><span class="dot"></span><span id="stxt">Пн–Пт 09–21 · Сб–Вс 10–20</span></div>
+      <a class="btn" href="tel:+79240000000">8 924 000-00-00</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker rv">Кафе-пекарня в Москве</p>
+      <h1 aria-label="Хлеб с видом на небо">
+        <span class="ln"><span>Хлеб</span></span>
+        <span class="ln"><span>с видом</span></span>
+        <span class="ln"><span>на <em>небо</em></span></span>
+      </h1>
+      <p class="lead">Тёплый хлеб из печи к первым лучам, кофе у окна и закат над столиком — место, куда хочется возвращаться.</p>
+      <div class="cta">
+        <a class="btn" href="#visit">Приходите в гости</a>
+        <a class="btn ghost" href="#day">Посмотреть, как у нас</a>
+      </div>
+    </div>
+    <div class="orb" id="orb" aria-hidden="true">
+      <svg class="ringtxt" viewBox="0 0 400 400"><defs><path id="rp" d="M200 200m-176 0a176 176 0 1 1 352 0a176 176 0 1 1-352 0"/></defs>
+        <text><textPath href="#rp" textLength="1090" lengthAdjust="spacing">свежий хлеб каждое утро ✦ кофе у окна ✦ закат над столиком ✦ </textPath></text></svg>
+      <div class="disc">
+        <div class="night"></div>
+        <div class="stars"><i style="left:16%;top:16%"></i><i style="left:72%;top:12%;animation-delay:.8s"></i><i style="left:44%;top:26%;animation-delay:1.6s"></i><i style="left:84%;top:34%;animation-delay:.4s"></i><i style="left:24%;top:38%;animation-delay:2.2s"></i></div>
+        <div class="orbit"><div class="sunb2"></div></div>
+        <svg class="hills" viewBox="0 0 400 180" preserveAspectRatio="none"><path d="M0 180V70C70 30 130 50 200 62S330 40 400 70v110z" fill="#E7C79A"/><path d="M0 180V110C90 80 150 100 220 94S340 80 400 104v76z" fill="#C98750"/></svg>
+        <svg class="loafw" viewBox="0 0 400 200"><path d="M20 200C20 100 110 40 200 40s180 60 180 160z" fill="#B5703A"/><path d="M60 170C70 110 130 70 200 66" fill="none" stroke="#D69A63" stroke-width="10" stroke-linecap="round" opacity=".55"/><g stroke="#F6DDB0" stroke-width="10" stroke-linecap="round"><path d="M110 160c15-32 30-52 48-64M185 160c15-32 30-52 48-64M260 160c15-32 30-52 48-64"/></g></svg>
+        <i class="steam" style="left:40%;bottom:46%;animation-delay:1.2s"></i><i class="steam" style="left:50%;bottom:48%;animation-delay:2.2s"></i><i class="steam" style="left:60%;bottom:46%;animation-delay:3s"></i>
+        <i class="mote" style="left:30%"></i><i class="mote" style="left:48%;animation-delay:2s"></i><i class="mote" style="left:66%;animation-delay:4s"></i><i class="mote" style="left:78%;animation-delay:1s"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arcband" id="arcband">
+  <div class="wrap">
+    <div><h2>Наш день идёт вслед за солнцем</h2><p id="abp">Работаем каждый день</p></div>
+    <svg viewBox="0 0 600 250" role="img" aria-label="Путь солнца по часам работы пекарни">
+      <line x1="20" y1="210" x2="580" y2="210" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>
+      <path id="arcp" d="M40 210A260 190 0 0 1 560 210" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/>
+      <path id="arcprog" d="M40 210A260 190 0 0 1 560 210" fill="none" stroke="#F0CF86" stroke-width="3.5" stroke-linecap="round"/>
+      <g id="arcsun"><circle r="34" fill="rgba(246,194,107,.22)"/><circle r="20" fill="rgba(246,194,107,.35)"/><circle r="12" fill="#F6C26B"/></g>
+      <text class="lbl" x="40" y="238" text-anchor="middle">открываемся <tspan id="lo">09:00</tspan></text>
+      <text class="lbl" x="560" y="238" text-anchor="middle">закрываемся <tspan id="lc">21:00</tspan></text>
+    </svg>
+  </div>
+</section>
+
+<!-- ===== Три настроения дня ===== -->
+<section class="day" id="day">
+  <div class="wrap">
+    <div class="rv">
+      <div class="tabs" role="tablist" aria-label="Время дня" id="tabs">
+        <span class="pill" id="pill"></span>
+        <button role="tab" aria-selected="true">Утро</button>
+        <button role="tab" aria-selected="false">День</button>
+        <button role="tab" aria-selected="false">Вечер</button>
+      </div>
+      <div class="swap" id="swap">
+        <h2 id="dh">Встречай восход солнца вместе с нашим хлебом</h2>
+        <p class="t" id="dp">Каждое утро мы достаём хлеб из печи с первыми лучами — тёплый, хрустящий и ароматный, прямо к началу дня.</p>
+      </div>
+    </div>
+    <div class="win rv" id="win" data-s="0" style="--d:.15s" aria-hidden="true">
+      <div class="sky s0"></div><div class="sky s1"></div><div class="sky s2"></div>
+      <div class="stars"><i style="left:14%;top:12%"></i><i style="left:70%;top:9%;animation-delay:.8s"></i><i style="left:42%;top:20%;animation-delay:1.6s"></i><i style="left:86%;top:26%;animation-delay:.4s"></i><i style="left:26%;top:30%;animation-delay:2.2s"></i></div>
+      <div class="sun"></div><div class="frame"></div><div class="sill"></div>
+      <div class="cup" style="left:56%"><span class="st"></span></div><div class="cup" style="left:76%"><span class="st" style="animation-delay:1s"></span></div>
+      <svg class="bun" viewBox="0 0 120 60"><path d="M4 58C4 24 30 6 60 6s56 18 56 52z" fill="#B5703A"/><g stroke="#F6DDB0" stroke-width="5" stroke-linecap="round"><path d="M28 46c5-10 9-16 14-20M52 46c5-10 9-16 14-20M76 46c5-10 9-16 14-20"/></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Ценности ===== -->
+<section class="vals" id="values">
+  <div class="wrap">
+    <h2 class="rv">Всё, что делает утро вкуснее</h2>
+    <div class="grid">
+      <article class="card rv"><svg viewBox="0 0 54 54"><path d="M8 40c0-14 8-22 19-22s19 8 19 22z"/><path d="M18 36c2-5 4-8 6-9M27 36c2-5 4-8 6-9M36 36c2-5 4-8 6-9" opacity=".7"/><path d="M6 44h42"/></svg>
+        <h3>Хлеб из печи</h3><p>Выпекаем каждое утро и достаём к первым лучам — с хрустящей коркой и мягким мякишем.</p></article>
+      <article class="card rv" style="--d:.1s"><svg viewBox="0 0 54 54"><path d="M12 22h24v12a10 10 0 0 1-10 10h-4a10 10 0 0 1-10-10z"/><path d="M36 25h4a5 5 0 0 1 0 10h-4M20 8c-2 3 2 5 0 8M28 8c-2 3 2 5 0 8"/></svg>
+        <h3>Кофе у окна</h3><p>Мягкие диваны, тёплое дерево и чашка, от которой хочется задержаться подольше.</p></article>
+      <article class="card rv" style="--d:.2s"><svg viewBox="0 0 54 54"><circle cx="27" cy="30" r="9"/><path d="M27 10v6M12 16l4 4M42 16l-4 4M6 30h6M42 30h6M8 46h38"/></svg>
+        <h3>Закат над столиком</h3><p>Хороший способ завершить день — небо в закатных красках и компания близких.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Приглашение ===== -->
+<section class="visit" id="visit">
+  <div class="wrap"><div class="box rv">
+    <div><h2>Занесём вам булочку к хорошему настроению</h2><p>Хотите узнать, есть ли ваше любимое изделие? Позвоните — подскажем, что сейчас тёплое.</p></div>
+    <div class="side"><a class="btn" href="tel:+79240000000">Позвонить в пекарню</a><span style="font-size:14px;color:#C6D2DD">г. Москва, ул. Дзержинского, 14</span></div>
+  </div></div>
+</section>
+</main>
+
+<!-- ===== Подвал ===== -->
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top" aria-label="Наверх">
+        <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="ring" cx="50" cy="50" r="46" fill="none" stroke="#FCF9F3" stroke-width="2"/>
+          <g class="rays" stroke="#F0CF86" stroke-width="2" stroke-linecap="round"><path d="M50 9v4M50 31v4M29 22l3 3M71 22l-3 3"/></g>
+          <circle class="sun" cx="50" cy="22" r="6.5" fill="#F0CF86"/>
+          <path class="loaf" d="M22 72C22 48 36 34 50 34s28 14 28 38z" fill="#C98750"/>
+          <path d="M37 62c3-8 6-12 9-15M48 62c3-8 6-12 9-15M59 62c3-8 6-12 9-15" stroke="#25303F" stroke-width="3.2" stroke-linecap="round" fill="none" opacity=".75"/>
+          <path d="M18 72h64" stroke="#FCF9F3" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="word">корка неба<small>кафе-пекарня</small></span>
+      </a>
+      <p class="about">Хлеб, кофе и уютное место для встречи с близкими.</p>
+    </div>
+    <div><h3>Адрес</h3><p>г. Москва,<br>ул. Дзержинского, 14</p></div>
+    <div><h3>Часы работы</h3><ul><li>Пн–Пт: 09:00–21:00</li><li>Сб–Вс: 10:00–20:00</li></ul></div>
+    <div><h3>Телефон</h3><p class="note">Чтобы узнать о наличии изделия, звоните:</p><a class="phone fl" href="tel:+79240000000">8 924 000-00-00</a></div>
+  </div>
+  <div class="wrap" style="display:block;padding-top:0"><div class="big" aria-hidden="true">корка неба</div></div>
+  <div class="bot"><div class="wrap">
+    <span>© Корка неба. Пекарня с видом на небо.</span>
+    <button class="up" onclick="window.scrollTo({top:0,behavior:'smooth'})">Наверх ↑</button>
+  </div></div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr');
+  function onS(){hdr.classList.toggle('stuck',window.scrollY>30)} onS();
+  window.addEventListener('scroll',onS,{passive:true});
+
+  // открыто / закрыто (Москва)
+  try{
+    var m=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Moscow'}));
+    var d=m.getDay(),h=m.getHours()+m.getMinutes()/60,we=d===0||d===6,o=we?10:9,c=we?20:21;
+    var s=document.getElementById('status'),t=document.getElementById('stxt');
+    if(h>=o&&h<c){t.textContent='Сейчас открыто до '+c+':00'}
+    else{s.classList.add('closed');t.textContent='Откроемся '+(h<o?'сегодня':'завтра')+' в '+(h<o?o:((d+1)%7===0||(d+1)%7===6?10:9))+':00'}
+  }catch(e){}
+
+  // reveal
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+    rv.forEach(function(el){io.observe(el)});
+  }else rv.forEach(function(el){el.classList.add('in')});
+
+  // параллакс
+  var orb=document.getElementById('orb');
+  if(orb&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    window.addEventListener('mousemove',function(e){orb.style.setProperty('--mx',(e.clientX/innerWidth-.5)*2);orb.style.setProperty('--my',(e.clientY/innerHeight-.5)*2)},{passive:true});
+  }
+  // дуга солнца
+  try{
+    var band=document.getElementById('arcband'),ap=document.getElementById('arcp'),pg=document.getElementById('arcprog'),as=document.getElementById('arcsun');
+    var mm=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Moscow'})),dd=mm.getDay(),w=dd===0||dd===6,oo=w?10:9,cc=w?20:21,hh=mm.getHours()+mm.getMinutes()/60;
+    var fr=Math.max(0,Math.min(1,(hh-oo)/(cc-oo))),isOpen=hh>=oo&&hh<cc,L=ap.getTotalLength();
+    document.getElementById('lo').textContent=('0'+oo).slice(-2)+':00';document.getElementById('lc').textContent=cc+':00';
+    var nx=((dd+1)%7===0||(dd+1)%7===6)?10:9;
+    document.getElementById('abp').textContent=isOpen?'Сейчас открыто — работаем до '+cc+':00. Заходите, пока солнце высоко.':(hh<oo?'Скоро откроемся — сегодня с '+oo+':00.':'Сегодня уже закрылись. Завтра ждём с '+nx+':00.');
+    pg.style.strokeDasharray=L;
+    var put=function(p){var q=ap.getPointAtLength(L*p);as.setAttribute('transform','translate('+q.x+' '+q.y+')');pg.style.strokeDashoffset=L*(1-p)};
+    put(0); if(!isOpen)as.style.opacity=.6;
+    var run=function(){var t0=null;(function st(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/2600);put(fr*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(st)})(performance.now())};
+    if('IntersectionObserver' in window){var o2=new IntersectionObserver(function(es){if(es[0].isIntersecting){o2.disconnect();run()}},{threshold:.35});o2.observe(band)}else put(fr);
+  }catch(e){}
+
+  // сцены дня
+  var D=[
+    ['Встречай восход солнца вместе с нашим хлебом','Каждое утро мы достаём хлеб из печи с первыми лучами — тёплый, хрустящий и ароматный, прямо к началу дня.'],
+    ['Самое уютное место для семьи и друзей','Мягкие диваны, тёплое дерево и запах свежей выпечки — атмосфера, в которой хочется задержаться подольше.'],
+    ['Встречай самые яркие моменты с нами и нашей выпечкой','Столик у окна, чашка кофе и небо в закатных красках — хороший способ завершить день.']
+  ];
+  var tabs=[].slice.call(document.querySelectorAll('#tabs button')),pill=document.getElementById('pill'),
+      win=document.getElementById('win'),sw=document.getElementById('swap'),dh=document.getElementById('dh'),dp=document.getElementById('dp'),cur=0,tm;
+  function pos(){var b=tabs[cur];pill.style.width=b.offsetWidth+'px';pill.style.transform='translateX('+(b.offsetLeft-5)+'px)'}
+  function go(i){
+    if(i===cur&&pill.style.width)return; cur=i;
+    tabs.forEach(function(b,k){b.setAttribute('aria-selected',k===i)}); pos(); win.dataset.s=i;
+    sw.classList.add('out'); clearTimeout(tm);
+    tm=setTimeout(function(){dh.textContent=D[i][0];dp.textContent=D[i][1];sw.classList.remove('out')},300);
+  }
+  tabs.forEach(function(b,k){b.addEventListener('click',function(){go(k)})});
+  window.addEventListener('resize',pos); (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(pos); pos();
+})();
+</script>
+</body>
+</html>
